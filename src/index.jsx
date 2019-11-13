@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
 import reduxPromise from 'redux-promise';
+import messages from './data/messages';
 
 // internal modules
 import App from './components/app';
@@ -23,20 +24,20 @@ const reducers = combineReducers({
   channelList: channelListReducer
 });
 
-const username = prompt("Username ?");
+// const username = prompt("Username ?");
 
 const initialState = {
-  messages: [],
+  messages: messages,
   channelList: ['good channel', 'bad channel'],
   selectedChannel: 'good channel',
-  user: username || 'toto'
+  user: 'toto'
 };
 
 const middlewares = applyMiddleware(reduxPromise, logger);
 
 // render an instance of the component in the DOM
 ReactDOM.render(
-  <Provider store={createStore(reducers, {}, middlewares)}>
+  <Provider store={createStore(reducers, initialState, middlewares)}>
     <App />
   </Provider>,
   document.getElementById('root')
